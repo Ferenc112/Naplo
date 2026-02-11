@@ -7,11 +7,69 @@
     <title>Napló</title>
 </head>
 <body>
-    <h1>Napló</h1>
+    <div class="container">
+        <h1>📚 Napló</h1>
 
-    <div id="naplo">
+        <!-- Szűrés és hozzáadás szekció -->
+        <div class="input-section">
+            <div class="form-group">
+                <label for="tantargy">Tantárgy:</label>
+                <select id="tantargy">
+                    <option value="">Tantárgy kiválasztása</option>
+                </select>
+            </div>
 
+            <div class="form-group">
+                <label>Jegy:</label>
+                <div class="grade-buttons">
+                    <button class="grade-btn" data-grade="1">1</button>
+                    <button class="grade-btn" data-grade="2">2</button>
+                    <button class="grade-btn" data-grade="3">3</button>
+                    <button class="grade-btn" data-grade="4">4</button>
+                    <button class="grade-btn" data-grade="5">5</button>
+                </div>
+            </div>
 
+            <button id="hozzaadas" class="add-btn">Hozzáadás</button>
+        </div>
+
+        <!-- Jegyek táblázata -->
+        <div class="grades-section">
+            <h2>Jegyek</h2>
+            <table id="jegyek-tabla" class="grades-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tantárgy</th>
+                        <th>Jegy</th>
+                        <th>Dátum</th>
+                        <th>Művelet</th>
+                    </tr>
+                </thead>
+                <tbody id="jegyek-tbody">
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Átlag -->
+        <div class="average-section">
+            <h3 id="atlag-szoveg">Átlag: 0.00</h3>
+        </div>
+
+        <!-- Tantárgyankénti átlag -->
+        <div class="subject-average-section">
+            <h2>Tantárgyankénti átlag</h2>
+            <table id="tantargy-atlag-tabla" class="average-table">
+                <thead>
+                    <tr>
+                        <th>Tantárgy</th>
+                        <th>Átlag</th>
+                    </tr>
+                </thead>
+                <tbody id="tantargy-atlag-tbody">
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script src="index.js"></script>
