@@ -1,10 +1,7 @@
-// Adatmodell: jegyek tömb
+
 let jegyek = [];
 
-// localStorage kulcs
 const STORAGE_KEY = 'naplo_jegyek';
-
-// DOM elemek
 const tantargySelect = document.getElementById('tantargy');
 const gradeButtons = document.querySelectorAll('.grade-btn');
 const hozzaadasBtn = document.getElementById('hozzaadas');
@@ -26,17 +23,17 @@ function init() {
 
 // Event listenrek beállítása
 function setupEventListeners() {
-    // Jegy gomb kattintások
+    
     gradeButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
             selectGrade(parseInt(e.target.dataset.grade));
         });
     });
 
-    // Hozzáadás gomb
+    
     hozzaadasBtn.addEventListener('click', addGrade);
 
-    // Enter billentyű a select-ben
+    
     tantargySelect.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             addGrade();
@@ -48,7 +45,7 @@ function setupEventListeners() {
 function selectGrade(grade) {
     selectedGrade = grade;
     
-    // Frissítjük a gomb megjelenítést
+    
     gradeButtons.forEach(btn => {
         btn.classList.remove('selected');
         if (parseInt(btn.dataset.grade) === grade) {
@@ -82,15 +79,12 @@ function addGrade() {
     // Hozzáadás a tömbhöz
     jegyek.push(ujJegy);
 
-    // Mentés a localStorage-ba
     saveToStorage();
 
-    // UI frissítése
     populateSubjects();
     renderGrades();
     updateAverages();
 
-    // Forma alaphelyzetbe állítása
     tantargySelect.value = '';
     selectedGrade = null;
     gradeButtons.forEach(btn => btn.classList.remove('selected'));
@@ -116,7 +110,6 @@ function renderGrades() {
         return;
     }
 
-    // Fordított sorrendben jelenítjük meg (a legújabb elöl)
     jegyek.slice().reverse().forEach((jegy, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -132,22 +125,19 @@ function renderGrades() {
 
 // Átlagok frissítése
 function updateAverages() {
-    // Összátlag kiszámítása
     const atlag = calculateOverallAverage();
     atlagSzoveg.textContent = `Átlag: ${atlag.toFixed(2)}`;
 
-    // Tantárgyankénti átlagok
     renderSubjectAverages();
 }
 
-// Összátlag kiszámítása (reduce használatával)
+// Összátlag kiszámítása
 function calculateOverallAverage() {
     if (jegyek.length === 0) return 0;
 
     return jegyek.reduce((sum, jegy) => sum + jegy.jegy, 0) / jegyek.length;
 }
 
-// Tantárgyankénti átlagok megjelenítése
 function renderSubjectAverages() {
     tantargyAtlagTbody.innerHTML = '';
 
@@ -165,7 +155,6 @@ function renderSubjectAverages() {
         bySubject[jegy.tantargy].push(jegy.jegy);
     });
 
-    // Átlagok kiszámítása és megjelenítése (reduce használatával)
     Object.keys(bySubject).sort().forEach(subject => {
         const grades = bySubject[subject];
         const avg = grades.reduce((sum, grade) => sum + grade, 0) / grades.length;
@@ -179,7 +168,7 @@ function renderSubjectAverages() {
     });
 }
 
-// Tantárgyak feltöltése a selectben (spread operátor és filter használatával)
+// Tantárgyak feltöltése 
 function populateSubjects() {
     const subjects = [...new Set(jegyek.map(j => j.tantargy))];
     const currentValue = tantargySelect.value;
@@ -188,7 +177,6 @@ function populateSubjects() {
     const defaultSubjects = ['Matematika', 'Magyar', 'Angol', 'Informatika', 'Történelem', 'Biológia'];
     const allSubjects = [...new Set([...subjects, ...defaultSubjects])].sort();
 
-    // Options regenerálása
     tantargySelect.innerHTML = '<option value="">Tantárgy kiválasztása</option>';
     allSubjects.forEach(subject => {
         const option = document.createElement('option');
@@ -200,12 +188,10 @@ function populateSubjects() {
     tantargySelect.value = currentValue;
 }
 
-// localStorage-ba mentés
+// localStorage
 function saveToStorage() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(jegyek));
 }
-
-// localStorage-ból betöltés
 function loadFromStorage() {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
@@ -224,20 +210,3 @@ function getTodayDate() {
 
 // Alkalmazás indítása
 init();
-
-
-
-//6 minden jegy legaláb 3        every
-// 6.
-const mindenLegalabb3 = diakok.every(diák => diák.jegy >= 3);
-console.log("6. Minden jegy legalább 3-as?");
-console.log(mindenLegalabb3);
-console.log();
-
-
-//7 uj diák hozá adás       spread operátor
-// // 7.
-const ujDiak = { nev: "Dávid", tantargy: "Testnevelés", jegy: 5 };
-const frissitettDiakok = [...diakok, ujDiak];
-console.log("7. Diákok az új tanulóval:");
-console.log(frissitettDiakok);
